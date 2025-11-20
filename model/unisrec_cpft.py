@@ -174,7 +174,7 @@ class UniSRec(SASRec):
         # convert logits to probability
         probs = nn.functional.softmax(logits, dim=1)
         cal_scores = probs[torch.arange(logits.size(0)), pos_items]
-        # calculate the cumulative sum of the probability
+        # compute α-percentile of positive-item probabilities
         target_probability = torch.quantile(cal_scores, self.alpha * (1 + 1/ logits.size(0)), interpolation='higher')
         return target_probability
     
