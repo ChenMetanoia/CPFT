@@ -216,14 +216,14 @@ class FDSA(SequentialRecommender):
         return total_loss
     
     def calculate_eta(self, logits, pos_items):
-        '''Compute α-percentile of positive-item probabilities
+        '''Calculate the probability of the target item
         logits: [B n_items]
         pos_items: [B]
         return: [B]
         '''  
         probs = nn.functional.softmax(logits, dim=1)
         cal_scores = probs[torch.arange(logits.size(0)), pos_items]
-        # calculate the cumulative sum of the probability
+        # compute α-percentile of positive-item probabilities
         target_probability = torch.quantile(cal_scores, self.alpha * (1 + 1/ logits.size(0)), interpolation='higher')
         return target_probability
     
