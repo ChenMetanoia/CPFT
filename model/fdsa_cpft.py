@@ -216,7 +216,7 @@ class FDSA(SequentialRecommender):
         return total_loss
     
     def calculate_eta(self, logits, pos_items):
-        '''Calculate the probability of the target item
+        '''Compute α-percentile of positive-item probabilities
         logits: [B n_items]
         pos_items: [B]
         return: [B]
